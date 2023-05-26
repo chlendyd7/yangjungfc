@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'assets/img/football4.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h3></h3>
+                    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </header>
+<div class="container my-3">
+    <form method="post" action="{% url 'common:login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->
+        {% include "form_errors.html" %}
+        <div class="mb-3">
+            <label for="username">사용자ID</label>
+            <input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" name="password" id="password"
+                   value="{{ form.password.value|default_if_none:'' }}">
+        </div>
+            <button type="submit" class="btn btn-secondary">로그인</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'common:signup' %}'">회원가입</button>
+            
+            
+        
+        
+        <!-- <button type="button" class="btn btn-secondary" onclick=location.href='{% url ''common:signup% }'>회원가입</button> -->
+    </form>
+</div>
+{% endblock %}
