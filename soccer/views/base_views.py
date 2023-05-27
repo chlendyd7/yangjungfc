@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 import logging
-from soccer.models import Question
+from soccer.models import Question, Answer
 
 
 
@@ -31,5 +31,11 @@ def board(request):
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    context = {'question': question}
+    page = request.GET.get('page', '1')
+    answer_list = Answer.objects.filter(question=question).order_by('-voter')
+    # question=question을 통해 알맞은 것만 가져와 달라
+    paginator = Paginator(answer_list, 5)
+    page_obj = paginator.get_page(page)
+
+    context = {'answer_list': page_obj, 'question': question, 'page':page}
     return render(request, 'soccer/question_detail.html', context)
