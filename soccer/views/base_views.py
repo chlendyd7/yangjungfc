@@ -7,6 +7,8 @@ from soccer.models import Question, Answer
 
 
 
+
+
 def home(request):
     return render(request, 'home.html')
 
